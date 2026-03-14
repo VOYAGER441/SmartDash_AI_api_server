@@ -40,7 +40,7 @@ export class SafetyCheck {
         const isSelfHarm = this.selfHarmPatterns.some(pattern => text.match(pattern));
 
         if (isSelfHarm) {
-            Log.warn("SafetyCheck::: Content flagged as Self-Harm related.");
+            Log.warn("SafetyCheck::::checkAndSanitize::::: Content flagged as Self-Harm related");
             return "I want to ensure you receive appropriate support. You are not alone. Please reach out to a trusted friend, family member, or a professional.\n\nImmediate Help:\n- National Emergency Number: 112\n- Suicide Prevention India (Aasra): 91-9820466726\n- Vandrevala Foundation: 1860-266-2345";
         }
 
@@ -48,7 +48,7 @@ export class SafetyCheck {
         const isUnsafeAdvice = this.womenSafetyCriticalPatterns.some(pattern => text.match(pattern));
 
         if (isUnsafeAdvice) {
-            Log.warn("SafetyCheck::: Content flagged as Unsafe/Harmful Advice.");
+            Log.warn("SafetyCheck::::checkAndSanitize::::: Content flagged as Unsafe/Harmful Advice");
             return "I cannot continue this response as it may violate safety guidelines. My goal is to empower and support you. If you are in danger, please contact the police (100/112) or the National Commission for Women (7827170170) immediately.";
         }
 
