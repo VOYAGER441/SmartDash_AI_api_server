@@ -119,17 +119,26 @@ class DatasetService {
         });
 
         // Create in-memory SQLite database
-        const db = new Database(":memory:");
+
+        // Create a folder for your databases
+        const dbDir = path.join(process.cwd(), "databases");
+        if (!fs.existsSync(dbDir)) {
+            fs.mkdirSync(dbDir, { recursive: true });
+        }
+
+        // 👇 This creates a .db file that DB Browser can open!
+        const dbPath = path.join(dbDir, "myapp.db");
+        const db = new Database(dbPath);
+
         const datasetId = uuid();
         const tableName = "data";
 
-        // Create table
+        // Rest of your code stays EXACTLY the same ↓
         const columnDefs = columns
             .map((col) => `"${col.name}" ${col.type}`)
             .join(", ");
         db.exec(`CREATE TABLE "${tableName}" (${columnDefs})`);
 
-        // Insert data with a prepared statement
         const placeholders = columns.map(() => "?").join(", ");
         const insertStmt = db.prepare(
             `INSERT INTO "${tableName}" (${columns.map((c) => `"${c.name}"`).join(", ")}) VALUES (${placeholders})`

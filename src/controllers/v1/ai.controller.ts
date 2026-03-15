@@ -1,11 +1,10 @@
-import { Log } from "@/utils/logger";
-import { Request, Response } from "express";
-import utils from "@/utils";
-import dashboardService from "@/services/dashboard.service";
-import geminiService from "@/services/gemini.service";
-import datasetService from "@/services/dataset.service";
-import { chatValidation, datasetIdValidation } from "@/validations/ai.validation";
 import { AppError } from "@/error/AppError";
+import dashboardService from "@/services/dashboard.service";
+import datasetService from "@/services/dataset.service";
+import utils from "@/utils";
+import { Log } from "@/utils/logger";
+import { chatValidation, datasetIdValidation } from "@/validations/ai.validation";
+import { Request, Response } from "express";
 
 class AIController {
     /**
