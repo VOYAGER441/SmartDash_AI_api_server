@@ -1,7 +1,7 @@
 import express from "express";
 import aiRouter from "./ai.route";
 import datasetRouter from "./dataset.route";
-import { Log } from "@/utils/logger";
+import authRouter from "./auth.route";
 
 const router = express.Router();
 
@@ -10,9 +10,11 @@ const router = express.Router();
 
 // public routes
 // ###############################################
-Log.info("V1Router::::setup::::: Setting up AI route");
+
+router.use("/auth", authRouter);
+
 router.use("/ai", aiRouter);
-Log.info("V1Router::::setup::::: Setting up dataset route");
+
 router.use("/dataset", datasetRouter);
 
 // private routes
