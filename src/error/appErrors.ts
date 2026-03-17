@@ -1,28 +1,44 @@
-// appErrors.js
+import { AppError } from "./AppError";
 
-const AppError = require('./AppError');
+// SmartDash-specific error classes
 
-export  const appErrors = {
-  // 400 - Bad Request
-  badRequest: new AppError('Bad request', 400),
+export class DatasetNotFoundError extends AppError {
+    constructor(datasetId: string) {
+        super(`Dataset not found: ${datasetId}`, 404);
+    }
+}
 
-  // 401 - Unauthorized
-  unauthorized: new AppError('Unauthorized access', 401),
+export class InvalidCSVError extends AppError {
+    constructor(message: string = "Invalid or malformed CSV file") {
+        super(message, 400);
+    }
+}
 
-  // 403 - Forbidden
-  forbidden: new AppError('Forbidden. You do not have access to this resource.', 403),
+export class QueryExecutionError extends AppError {
+    constructor(message: string = "Failed to execute query on dataset") {
+        super(message, 500);
+    }
+}
 
-  // 404 - Not Found
-  notFound: new AppError('Resource not found', 404),
+export class AIGenerationError extends AppError {
+    constructor(message: string = "Failed to generate AI response") {
+        super(message, 500);
+    }
+}
 
-  // 409 - Conflict
-  conflict: new AppError('Conflict: Duplicate resource or conflict with the current state of the resource.', 409),
+export class SchemaValidationError extends AppError {
+    constructor(message: string = "AI-generated query references columns not in the dataset") {
+        super(message, 422);
+    }
+}
 
-  // 500 - Internal Server Error
-  internalServerError: new AppError('Internal server error', 500),
-
-  // 503 - Service Unavailable
-  serviceUnavailable: new AppError('Service temporarily unavailable', 503),
+// Legacy error instances
+export const appErrors = {
+    badRequest: new AppError("Bad request", 400),
+    unauthorized: new AppError("Unauthorized access", 401),
+    forbidden: new AppError("Forbidden. You do not have access to this resource.", 403),
+    notFound: new AppError("Resource not found", 404),
+    conflict: new AppError("Conflict: Duplicate resource or conflict with the current state of the resource.", 409),
+    internalServerError: new AppError("Internal server error", 500),
+    serviceUnavailable: new AppError("Service temporarily unavailable", 503),
 };
-
-module.exports = appErrors;
