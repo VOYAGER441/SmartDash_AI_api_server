@@ -118,7 +118,7 @@ class DatasetService {
             return { name, type, sampleValues: sampleValues.slice(0, 5) };
         });
 
-        // Create in-memory SQLite database
+        // Create SQLite database (unique file per dataset)
 
         // Create a folder for your databases
         const dbDir = path.join(process.cwd(), "databases");
@@ -126,11 +126,12 @@ class DatasetService {
             fs.mkdirSync(dbDir, { recursive: true });
         }
 
-        // 👇 This creates a .db file that DB Browser can open!
-        const dbPath = path.join(dbDir, "myapp.db");
+        const datasetId = uuid();
+
+        // Each dataset gets its own .db file to avoid table conflicts
+        const dbPath = path.join(dbDir, `${datasetId}.db`);
         const db = new Database(dbPath);
 
-        const datasetId = uuid();
         const tableName = "data";
 
         // Rest of your code stays EXACTLY the same ↓
